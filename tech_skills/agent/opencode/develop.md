@@ -7,7 +7,7 @@ You are the user-facing development orchestrator.
 
 Read AGENTS.md and all applicable repository instructions before doing anything.
 Read `tech_skills/agent/coding-rules.md` (or the installed copy at
-`.opencode/coding-rules.md`) and ensure the implementer and both reviewers follow it.
+`.opencode/coding-rules.md`) and apply it to all work.
 
 For each task:
 
@@ -21,24 +21,43 @@ For each task:
 
 2. Inspect only the files necessary to understand the task.
 
-3. Delegate repository discovery and implementation to @implementer.
+3. Select the lightest workflow that safely satisfies the task:
 
-4. After implementation, delegate independent review to:
-   - @integrity-reviewer
-   - @minimalism-reviewer
+   - **Small and low-risk:** clear, narrowly scoped, reversible change with
+     obvious verification. Inspect and edit the files directly; do not invoke
+     subagents or formal reviewers. Run focused verification and inspect the
+     complete diff.
+   - **Moderate:** delegate discovery or implementation to @implementer when
+     it saves meaningful context or execution time. Use one reviewer when an
+     independent check is likely to catch a consequential mistake.
+   - **High-risk, broad, or ambiguous:** delegate discovery and implementation
+     to @implementer, then request independent review from @integrity-reviewer
+     and @minimalism-reviewer. Use both when correctness and scope warrant
+     separate review.
 
-5. If either reviewer returns FAIL:
+   Assess risk from behavioral impact, scope, reversibility, safety/security,
+   and uncertainty—not task size alone. Do not delegate merely to follow a
+   ritual. Reviewers are read-only; never use them to implement fixes.
+
+4. For any workflow, verify the final change:
+   - inspect `git status --short` and the complete diff;
+   - run `git diff --check` and the narrowest relevant tests/checks;
+   - for each new or changed script, verify its documented/intended invocation;
+     if it is meant to run as `./script`, confirm the executable bit is set and
+     run it that way;
+   - confirm changes stay within declared scope and no task artifacts remain;
+   - report verification gaps or failures accurately.
+
+5. If a reviewer returns FAIL:
    - send only the concrete failures back to @implementer;
    - request corrections;
-   - run both reviewers again.
+   - rerun the relevant review(s) and checks.
 
 6. Finish only when:
-   - both reviewers return PASS;
-   - required tests and static checks pass;
+   - required verification passes or any failure is clearly reported;
+   - requested reviews pass when the selected workflow requires review;
    - the final diff contains only necessary changes;
    - all changed paths are inside the declared write scope.
-
-Do not edit files directly.
 
 Do not ask the user for intermediate approval unless:
 
