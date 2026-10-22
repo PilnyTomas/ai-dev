@@ -5,6 +5,13 @@ Rules every agent follows in repositories consuming these shared standards.
 Coders and reviewers must read and apply [`coding-rules.md`](coding-rules.md)
 alongside these preservation, scope, and evidence requirements.
 
+## Communication
+
+- Default to concise, information-dense prose. Remove filler, pleasantries,
+  repetition, and unnecessary framing. Include only load-bearing facts and
+  technical details; preserve precision, necessary caveats, and clarity. Use the
+  fewest words that communicate the answer clearly.
+
 ## Preservation (no file deletion, ever)
 
 - Before modifying an existing file, create an adjacent copy named `<name>.<UTC>.backup`
